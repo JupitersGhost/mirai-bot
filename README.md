@@ -30,12 +30,8 @@ The bot itself currently runs on a Libre Computer Renegade (ROC-RK3328, 4GB) wit
 1. Clone this repository
    ```bash
    git clone https://github.com/jupitersghost/mirai-bot.git
-<<<<<<< HEAD
    cd mirai-bot
-=======
-   cd mirai-discord-bot
->>>>>>> b4f8ad3 (Local updates: main.go, README.md, example.env, go.mod)
-   ```
+   
 2. Copy `.env.example` to `.env` and fill in your Discord bot credentials
    ```bash
    cp .env.example .env

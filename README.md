@@ -8,9 +8,9 @@
 
 ---
 
-Mirai-bot is a Discord bot based on a character I created named Chisato Mirai. Her personality is cold, calculating, "kuudere" trope, with a determined vibe.
+Mirai-bot is a Discord presence and monitoring bot named Chisato Mirai, a kuudere-styled network defense operative in the CHIRASU collective. In lore, Mirai is cold, calculating, and relentlessly protective of CHIRASU's digital borders—embodying the role of an encrypted gateway and watchful sentinel.
 
-This bot has been tested and currently runs on a Libre Computer Renegade 4GB SBC (ROC-RK3328) board running Armbian.
+The bot itself currently runs on a Libre Computer Renegade (ROC-RK3328, 4GB) with Armbian, where it has been tested as a reliable way to display device presence through Discord. While the script is lightweight and does not yet use AI, it’s designed to be extended—future updates may integrate models via Ollama, llama.cpp, or similar inference backends to give Mirai her full analytical personality.
 
 ## Features
 

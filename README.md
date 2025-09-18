@@ -26,7 +26,7 @@ This bot has been tested and currently runs on a Libre Computer Renegade 4GB SBC
 
 1. Clone this repository
    ```bash
-   git clone https://github.com/YOUR_USERNAME/mirai-discord-bot.git
+   git clone https://github.com/jupitersghost/mirai-bot.git
    cd mirai-discord-bot
    ```
 2. Copy `.env.example` to `.env` and fill in your Discord bot credentials

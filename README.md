@@ -19,6 +19,9 @@ The bot itself currently runs on a Libre Computer Renegade (ROC-RK3328, 4GB) wit
 - `/status` - Operational status (ephemeral) 
 - `/hello random` - Random greeting from Mirai
 - `/hello list` - List all available greetings
+- `/admin sync` - Admin-only command to prune stale commands and re-register the current set
+- Resilient startup with exponential backoff and safe command registration
+- Health server auto-falls forward to the next available port if 8788 is in use
 - Rotating status activities every 15 minutes
 - Health check endpoint at `/healthz`
 
@@ -27,7 +30,11 @@ The bot itself currently runs on a Libre Computer Renegade (ROC-RK3328, 4GB) wit
 1. Clone this repository
    ```bash
    git clone https://github.com/jupitersghost/mirai-bot.git
+<<<<<<< HEAD
    cd mirai-bot
+=======
+   cd mirai-discord-bot
+>>>>>>> b4f8ad3 (Local updates: main.go, README.md, example.env, go.mod)
    ```
 2. Copy `.env.example` to `.env` and fill in your Discord bot credentials
    ```bash
@@ -64,6 +71,8 @@ DISCORD_TOKEN=your_bot_token_here
 APP_ID=your_application_id_here
 GUILD_ID=your_guild_id_here
 HEALTH_ADDR=127.0.0.1:8788
+ADMIN_USER_ID=your_discord_user_id_here
+
 ```
 
 ### Getting Your Discord Credentials:
@@ -198,6 +207,35 @@ Mirai rotates through various network-themed status activities every 15 minutes,
 - **Playing**: keepalive tag, packet chess, network tag
 - **Listening to**: network symphonies, server heartbeats, packet whispers
 - **Custom**: network maintenance, system monitoring, security patrol
+
+## Admin Sync
+
+Mirai includes an **admin-only** slash command `/admin sync`.  
+This safely removes any stale slash commands (such as legacy `/quips`) and re-registers the current command set.
+
+- Only the Discord user ID specified in `ADMIN_USER_ID` within `.env` can run this command.  
+- Use `/admin sync` whenever you:
+  - Add, rename, or remove commands
+  - Switch between **guild** (`GUILD_ID` set) and **global** (no `GUILD_ID`) scope
+
+**Scope notes**:  
+- **Guild scope** (with `GUILD_ID`): changes are nearly instant.  
+- **Global scope** (no `GUILD_ID`): changes may take several minutes due to Discord caching.  
+- If you previously created global commands and now want guild-only, you may need to temporarily unset `GUILD_ID`, restart, run `/admin sync` to prune globals, then restore `GUILD_ID`.
+
+## Troubleshooting
+
+- **Unknown interaction (10062)**:  
+  Discord requires commands to be acknowledged within ~3 seconds. `/admin sync` now defers immediately, then sends a follow-up response. If this error persists:
+  - Ensure only **one** Mirai instance is running (managed by systemd).
+  - Re-run `/admin sync` after confirming the bot is connected.
+
+- **Health port already in use**:  
+  If `HEALTH_ADDR` is busy, Mirai automatically increments to the next available port (up to +20) and logs the chosen URL.
+
+- **Commands not updating**:  
+  - Run `/admin sync` to prune and refresh.
+  - Check whether you are using guild vs global scope (see Admin Sync notes above).
 
 ## System Requirements
 
